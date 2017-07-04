@@ -60,6 +60,7 @@ void defaultMenu(){
                 break;
             case 0:
                 exit = 1;
+                clearScreen();
                 break;
             default:
                 printf("Selectionnez un chiffre parmis les propositions : ");
