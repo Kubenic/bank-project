@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "main.h"
 #include "client.h"
 
-void defaultMenu();
-void clearScreen();
 
 int main(int argc, char *argv[]){
     

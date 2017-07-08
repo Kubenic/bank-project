@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "main.h"
 #include "client.h"
 
 void clientMenu(){
@@ -117,17 +118,17 @@ void newClient(){
     
     FILE *clientfile = readClientFile();
     int numberOfline = getTotalLineNumbers(clientfile);
-    printf("Number of Lines : %d", numberOfline);
+    printf("Number of Lines : %d\n", numberOfline);
     int strsize = strlen(nom) + strlen(prenom) + strlen(job) + strlen(cellphone) + 5;
     char str[strsize];
-    
-    char buff[12];
+    int cpt;
+    for(cpt=0;cpt<strsize;cpt++){
+        str[cpt]='\0';
+    }
 
+    char buff[12];
     sprintf(buff, "%d", numberOfline);
-    
-    //printf("buff == %s",buff);
     strcat(str, buff);
-    //free(buff);
     
     strcat(str, ",");
     strcat(str, nom);
@@ -137,10 +138,8 @@ void newClient(){
     strcat(str, job);
     strcat(str, ",");
     strcat(str, cellphone);
-    strcat(str, "\n");
-    
-    printf("\n str = %s",str);
-    fwrite(str , 1 , sizeof(str) , clientfile );
+    strcat(str, "\r\n");
+    fwrite(str , 1 , sizeof(str)+2 , clientfile );
 }
 
 
@@ -157,9 +156,12 @@ FILE * readClientFile(){
 int getTotalLineNumbers(FILE *file){
     int lines = 0;
     char ch;
-    while(!feof(file))
+    FILE *clientfile;
+    clientfile = fopen("db/clients.csv", "r+");
+    while(!feof(clientfile))
     {
-      ch = fgetc(file);
+      ch = fgetc(clientfile);
+      //printf("%c", ch );
       if(ch == '\n')
       {
         lines++;
